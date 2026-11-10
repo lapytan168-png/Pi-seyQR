@@ -1,27 +1,38 @@
-# PostCSS
+# Sokha Haven Hotel
 
-<img align="right" width="95" height="95"
-     alt="Philosopher’s stone, logo of PostCSS"
-     src="https://postcss.org/logo.svg">
+A Khmer-language hotel booking site with a React/Vite frontend, a Python/FastAPI API, and a persistent SQLite database.
 
-PostCSS is a tool for transforming styles with JS plugins.
-These plugins can lint your CSS, support variables and mixins,
-transpile future CSS syntax, inline images, and more.
+## Requirements
 
-PostCSS is used by industry leaders including Wikipedia, Twitter, Alibaba,
-and JetBrains. The [Autoprefixer] and [Stylelint] PostCSS plugins are some of the most popular CSS tools.
+- Node.js 18 or newer
+- Python 3.9 or newer
 
----
+## Run locally
 
-<img src="https://cdn.evilmartians.com/badges/logo-no-label.svg" alt="" width="22" height="16" />  PostCSS is built by <b><a href="https://evilmartians.com/">Evil Martians</a></b>, an American design and engineering consultancy for <b>developer tools, AI, and cybersecurity startups</b>.
+Install the frontend dependencies and start Vite:
 
----
+```bash
+npm install
+npm run dev
+```
 
-[Abstract Syntax Tree]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
-[Evil Martians]: https://evilmartians.com/?utm_source=postcss
-[Autoprefixer]: https://github.com/postcss/autoprefixer
-[Stylelint]: https://stylelint.io/
-[plugins]: https://github.com/postcss/postcss#plugins
+In another terminal, install the Python dependencies and start the API:
 
-## Docs
-Read full docs **[here](https://postcss.org/)**.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+ADMIN_TOKEN="choose-a-long-private-token" python -m uvicorn backend.main:app --reload
+```
+
+Open the Vite URL shown in the first terminal. The API listens on `http://127.0.0.1:8000`; its interactive API documentation is at `/docs`.
+
+The SQLite database is created at `backend/hotel.db` on the first API startup and seeded with sample rooms. The admin panel uses the `ADMIN_TOKEN` environment variable; do not expose the development server publicly or use a guessable token in production.
+
+## Features
+
+- Search available rooms by check-in/check-out date.
+- Submit reservations with guest contact details and capacity validation.
+- Prevent overlapping active bookings, including simultaneous booking attempts.
+- Admin-protected room creation and availability toggling.
+- Admin-protected booking review and status changes.
